@@ -21,7 +21,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Recommended for performa
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-celery_app = Celery('tasks', broker='redis://localhost:6379/0', backend='redis://localhost:6379/0')
+celery_app = Celery('tasks', broker='redis://host.docker.internal:6379/0', backend='redis://host.docker.internal:6379/0')
 celery_app.conf.update({
     'CELERY_CONCURRENCY': 2,  # Adjust concurrency as needed
 })

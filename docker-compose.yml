@@ -1,0 +1,28 @@
+version: "3.8"  # Specify the docker-compose version
+
+services:
+  flask-app:
+    build: 
+      context: .
+      dockerfile: ./deploy/app/Dockerfile
+    volumes:
+      - "/Users/suryakamal/Documents/Code/intuit-assignment:/workspace"
+    ports:
+      - "5001:5001"  # Map container port 5001 to host port 5001 for Flask
+    environment:
+      - FLASK_ENV=development  # Set environment variables for your Flask app
+    depends_on:
+      - celery  # Ensure Celery worker is started before Flask
+
+  celery:
+    build:
+      context: .
+      dockerfile: ./deploy/celery/Dockerfile
+    environment:
+      - CELERY_BROKER_URL=redis://host.docker.internal:6379  # Configure Celery message broker (replace if needed)
+      - CELERY_RESULT_BACKEND=redis://host.docker.internal:6379  # Configure Celery result backend (replace if needed)
+
+  redis:
+    image: redis:latest  # Use the official Redis image
+    ports:
+      - "6379:6379"  # Map container port 6379 to host port 6379
