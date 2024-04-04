@@ -4,32 +4,36 @@ from flask_restx import Resource
 from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
 from app.services.order_service import OrderService, get_db, close_db
 from app.tasks import process_order_task
+from app.controllers.parsers import quote_parser, order_parser
 
 order_service = OrderService()
 
 @api.route('/quote')
 class GetQuote(Resource):
+
+    @api.expect(quote_parser)
     def post(self):
         """
         Get a price quote for a product.
         """
         verify_jwt_in_request()
-        data = request.get_json()
+        product_id = api.payload['product_id']
+        quantity = int(api.payload['quantity'])
         session = get_db()
-        product_id = data['product_id']
-        quantity = int(data['quantity'])
         price = order_service.get_quote(product_id, session)
         return jsonify({'price': price, 'quantity': quantity, 'total_cost': price * quantity})
 
 @api.route('/orders')
 class CreateOrder(Resource):
+
+    @api.expect(order_parser)
     def post(self):
         """
         Submit an order to purchase a product.
         """
         verify_jwt_in_request()
         current_user = get_jwt_identity()
-        data = request.get_json()
+        data = api.payload
         session = get_db()
         order_id = order_service.create_order(current_user, data, session)
         task_result = process_order_task.delay(data={"order_id": order_id})
