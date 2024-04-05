@@ -1,4 +1,4 @@
-## Order Management System - RESTful APIs (**link to your GitHub repository here**)
+## Order Management System - RESTful APIs
 
 This project implements a set of RESTful APIs for order management, designed to orchestrate communication between various enterprise systems. The APIs are intended to be used by a customer-facing website for functionalities like:
 * **Signup as a new user**
