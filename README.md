@@ -9,6 +9,8 @@ This project implements a set of RESTful APIs for order management, designed to 
 
 **Architecture Diagram:**
 
+![Alt text](https://github.com/suryakamalog/order-management/blob/main/order-management-architecture.png "Architecture diagram")
+
 **Key Features:**
 
 * **RESTful API Design:** Enables seamless integration with the customer-facing website.
