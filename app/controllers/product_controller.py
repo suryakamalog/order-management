@@ -3,7 +3,6 @@ from flask_restx import Resource
 from flask_jwt_extended import jwt_required, verify_jwt_in_request, get_jwt_identity
 from app.app import api
 from app.services.product_service import ProductService, get_db, close_db
-from app.controllers.parsers import product_parser
 
 product_service = ProductService()
 
@@ -19,7 +18,6 @@ class GetProduct(Resource):
         products = product_service.get_all_product(session)
         return jsonify({'products': products})
 
-    @api.expect(product_parser)
     def post(self):
         """
         Submit an order to purchase a product.

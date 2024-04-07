@@ -4,14 +4,12 @@ from flask_restx import Resource
 from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
 from app.services.order_service import OrderService, get_db, close_db
 from app.tasks import process_order_task
-from app.controllers.parsers import quote_parser, order_parser
 
 order_service = OrderService()
 
 @api.route('/quote')
 class GetQuote(Resource):
 
-    @api.expect(quote_parser)
     def post(self):
         """
         Get a price quote for a product.
@@ -26,7 +24,6 @@ class GetQuote(Resource):
 @api.route('/orders')
 class CreateOrder(Resource):
 
-    @api.expect(order_parser)
     def post(self):
         """
         Submit an order to purchase a product.
