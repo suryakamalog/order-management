@@ -7,14 +7,13 @@ from app.services.product_service import ProductService, get_db, close_db
 product_service = ProductService()
 
 @api.route('/product')
-class GetProduct(Resource):
+class Product(Resource):
     def get(self):
         """
         Get a price quote for a product.
         """
         session = get_db()
         verify_jwt_in_request()
-        current_user = get_jwt_identity()
         products = product_service.get_all_product(session)
         return jsonify({'products': products})
 
