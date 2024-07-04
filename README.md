@@ -31,7 +31,5 @@ This project implements a set of RESTful APIs for order management, designed to 
    ```bash
    docker-compose -f docker-compose.yml down
    ```
-4. **Setup:**
-   * Run 
-6. **API Documentation:** Access swagger using [127.0.0.1/](http://127.0.0.1:5001/)
+3. **API Documentation:** Access swagger using [127.0.0.1/](http://127.0.0.1:5001/)
 
